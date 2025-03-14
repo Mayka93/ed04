@@ -9,8 +9,8 @@ import java.util.List;
  * Permite agregar,modificar y eliminar contactos.
  */
 
-public class Agenda {
-    private List<Contacto> contacts; // Lista de Contacto
+public class Agenda implements AgendaInterface {
+    private List<Persona> contacts; // Lista de Persona
 
     /**
      * Constructor por defecto que inicializa la lista de contactos vacía.
@@ -25,9 +25,10 @@ public class Agenda {
      * @param name Nombre del contacto.
      * @param phone Número de teléfono.
     */
+    @Override
     public void addContact(String name, String phone) {
         boolean exists = false;
-        for (Contacto c : contacts) {
+        for (Persona c : contacts) {
             if (c.getName().equalsIgnoreCase(name)) {
                 exists = true;
                 c.getPhones().add(phone);
@@ -36,7 +37,7 @@ public class Agenda {
         }
 
         if (!exists) {
-            Contacto newContact = new Contacto(name, phone);
+            Persona newContact = new Persona(name, phone);
             contacts.add(newContact);
         }
     }
@@ -45,11 +46,12 @@ public class Agenda {
      * Elimina un contacto de la agenda por su nombre.
      * @param name Nombre del contacto a eliminar.
      */
+    @Override
     public void removeContact(String name) {
-        Iterator<Contacto> it = contacts.iterator();
+        Iterator<Persona> it = contacts.iterator();
 
         while (it.hasNext()) {
-            Contacto c = it.next();
+            Persona c = it.next();
 
             if (c.getName().equalsIgnoreCase(name)) {
                 it.remove();
@@ -63,8 +65,9 @@ public class Agenda {
      * @param oldPhone Número de teléfono antiguo.
      * @param newPhone Número de teléfono nuevo.
      */
+    @Override
     public void modifyPhoneNumber(String name, String oldPhone, String newPhone) {
-        for (Contacto c : contacts) {
+        for (Persona c : contacts) {
             if (c.getName().equalsIgnoreCase(name)) {
                 List<String> phones = c.getPhones();
 
@@ -81,7 +84,8 @@ public class Agenda {
      * Devuelve la lista completa de contactos en la agenda.
      * @return Lista de contactos.
      */
-    public List<Contacto> getContacts() {
+    @Override
+    public List<Persona> getContacts() {
         return this.contacts;
     }
 }
